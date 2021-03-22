@@ -68,12 +68,12 @@ public class ProductController {
 
     @Operation(summary = "Registra un nuevo producto")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Se registra el producto", content = @Content(schema = @Schema(implementation = Product.class)))
+            @ApiResponse(responseCode = "201", description = "Se registra el producto", content = @Content(schema = @Schema(implementation = Product.class)))
     })
     @PostMapping(value = "/products", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         Product addedProduct = productService.addProduct(product);
-        return new ResponseEntity<>(addedProduct, HttpStatus.OK);
+        return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Modifica un producto en el catálogo")

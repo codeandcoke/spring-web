@@ -51,7 +51,7 @@ public class ProductController {
     @PostMapping("/products")
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         Product addedProduct = productService.addProduct(product);
-        return new ResponseEntity<>(addedProduct, HttpStatus.OK);
+        return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
     }
 
     @PutMapping("/products/{id}")
