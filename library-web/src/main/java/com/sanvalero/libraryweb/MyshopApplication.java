@@ -1,4 +1,4 @@
-package com.sanvalero.myshop;
+package com.sanvalero.libraryweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

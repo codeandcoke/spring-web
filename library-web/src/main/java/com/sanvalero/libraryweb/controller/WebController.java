@@ -1,7 +1,7 @@
-package com.sanvalero.myshop.controller;
+package com.sanvalero.libraryweb.controller;
 
-import com.sanvalero.myshop.domain.Book;
-import com.sanvalero.myshop.service.BookService;
+import com.sanvalero.libraryweb.domain.Book;
+import com.sanvalero.libraryweb.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

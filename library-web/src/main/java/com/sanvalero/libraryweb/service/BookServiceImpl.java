@@ -1,7 +1,6 @@
-package com.sanvalero.myshop.service;
+package com.sanvalero.libraryweb.service;
 
-import com.sanvalero.myshop.domain.Book;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sanvalero.libraryweb.domain.Book;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

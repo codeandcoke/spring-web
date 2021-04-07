@@ -1,4 +1,4 @@
-package com.sanvalero.myshop.domain;
+package com.sanvalero.libraryweb.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,9 +1,8 @@
-package com.sanvalero.myshop.service;
+package com.sanvalero.libraryweb.service;
 
-import com.sanvalero.myshop.domain.Book;
+import com.sanvalero.libraryweb.domain.Book;
 
 import java.util.List;
-import java.util.Set;
 
 public interface BookService {
 
