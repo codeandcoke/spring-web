@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo</title>
+</head>
+<body>
+    <h1>Catálogo de libros</h1>
+    <ul th:each="book : ${books}">
+        <li><p th:text="${book.title}"></p><a th:href="@{'book/' + ${book.id}}">Ver Información</li>
+    </ul>
+</body>
+</html>
