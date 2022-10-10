@@ -7,4 +7,4 @@ Proyectos de ejemplo de aplicaciones web con Spring Boot
  - **myshop-ws-swagger2**: Incluye ejemplos de relaciones entre clases y DTOs
  - **library-api**: Ejemplo de proyecto API para ser consumida por una web (library-web)
  - **library-web**: Ejemplo de proyecto web que consume una API (library-api)
- 
+ - **bikesapi_reactive**: Ejemplo de API reactiva con un breve ejemplo de cliente que lo consume con WebClient (incluye colección de prueba y definición OpenAPI 3)

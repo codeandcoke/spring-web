@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "819fa587-7f7e-49e4-b141-1aa6a1d065b6",
+		"name": "bikesapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "addRoute",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\":\"12-11-2021\",\n    \"endDate\": \"13-12-2021\",\n    \"kilometers\": 5,\n    \"userId\": \"6343005f47678520c10c8044\",\n    \"bikeId\": \"62515762011ab415851bcc78\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/routes"
+			},
+			"response": []
+		},
+		{
+			"name": "/bike/{bikeId}/routes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/bike/62515762011ab415851bcc78/routes"
+			},
+			"response": []
+		},
+		{
+			"name": "/bike/{bikeId}/routes?distance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/bike/62515762011ab415851bcc78/routes?distance=100",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bike",
+						"62515762011ab415851bcc78",
+						"routes"
+					],
+					"query": [
+						{
+							"key": "distance",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bikes OK (reactive)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/stream+json",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": "http://localhost:8080/bikes"
+			},
+			"response": []
+		},
+		{
+			"name": "bike",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/bike/62515762011ab415851bcc78"
+			},
+			"response": []
+		},
+		{
+			"name": "bikes KO (400)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"available\": true,\n    \"kilometers\": 100,\n    \"battery\": 100,\n    \"babyChair\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/bikes"
+			},
+			"response": []
+		},
+		{
+			"name": "bikes OK (bikeId=23)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"available\": true,\n    \"kilometers\": 100,\n    \"battery\": 100,\n    \"babyChair\": \"true\",\n    \"stationId\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/bikes"
+			},
+			"response": []
+		},
+		{
+			"name": "bikes OK (bikeId=24)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"available\": true,\n    \"kilometers\": 100,\n    \"battery\": 100,\n    \"babyChair\": true,\n    \"stationId\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/bikes"
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/stream+json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"surname\": \"must not be null\",\n    \"name\": \"must not be null\",\n    \"email\": \"asda@asdads.es\",\n    \"dni\": \"23323233H\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users"
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/event-stream",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"available\": true,\n    \"kilometers\": 100,\n    \"battery\": 100,\n    \"babyChair\": true,\n    \"stationId\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/users"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
