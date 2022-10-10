@@ -8,3 +8,4 @@ Proyectos de ejemplo de aplicaciones web con Spring Boot
  - **library-api**: Ejemplo de proyecto API para ser consumida por una web (library-web)
  - **library-web**: Ejemplo de proyecto web que consume una API (library-api)
  - **bikesapi_reactive**: Ejemplo de API reactiva con un breve ejemplo de cliente que lo consume con WebClient (incluye colección de prueba y definición OpenAPI 3)
+ - **Application_reactive**: Ejemplo de aplicación JavaFx con RxJava que consume la API **bikesapi_reactive** y muestra la lista de usuarios en una TableView
