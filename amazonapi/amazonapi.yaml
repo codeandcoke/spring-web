@@ -1,0 +1,351 @@
+openapi: 3.0.2
+servers:
+  - url: /amazon-api
+info:
+  description: API para la venta de productos de Amazon
+  version: "1.0"
+  title: Amazon API
+tags:
+  - name: catalog
+    description: Operaciones para realizar con productos
+  - name: orders
+    description: Operaciones para gestionar los pedidos
+  - name: users
+    description: Gestión de usuarios
+paths:
+  /products:
+    get:
+      tags:
+        - catalog
+      summary: Listado de productos
+      description: Obtiene la información de todos los productos que hay actualmente en el catálogo
+      operationId: getProducts
+      parameters:
+        - name: price
+          in: query
+          description: Filtro por precio
+          required: false
+          schema:
+            type: number
+            format: float
+            default: 0
+        - name: category
+          in: query
+          description: Filtro por categoría
+          required: false
+          schema:
+            type: string
+            default: ""
+      responses:
+        '200':
+          description: Se devuelve el listado de productos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+        - catalog
+      summary: Registro de un nuevo producto
+      description: Registra un nuevo producto en el catálogo de la tienda
+      operationId: postProduct
+      requestBody:
+        $ref: '#/components/requestBodies/ProductIn'
+      responses:
+        '201':
+          description: El producto se registra correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /product/{productId}:
+    parameters:
+      - $ref: '#/components/parameters/ProductId'
+    delete:
+      tags:
+        - catalog
+      summary: Elimina un producto
+      description: Elimina un producto del catálogo a partir del productId
+      operationId: deleteProduct
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/ProductNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - catalog
+      summary: Modifica un producto
+      description: Modifica toda la información de un producto
+      operationId: putProduct
+      requestBody:
+        $ref: '#/components/requestBodies/ProductIn'
+      responses:
+        '200':
+          description: El producto se ha modificado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        #'400':
+        '404':
+          $ref: '#/components/responses/ProductNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      tags:
+        - catalog
+      summary: Modifica el campo de un producto
+      description: Modifica el campo especificado del producto
+      operationId: patchProduct
+      requestBody:
+        description: Nombre y valor del campo que se modifica
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchProduct'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        #'400':
+        '404':
+          $ref: '#/components/responses/ProductNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /user/{userId}/orders:
+    post:
+      tags:
+        - orders
+      summary: Alta de un pedido
+      description: Registra un nuevo pedido asociado al usuario que lo solicita
+      operationId: postOrder
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        $ref: '#/components/requestBodies/OrderInDTO'
+      responses:
+        '201':
+          description: El pedido se registra correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderOutDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/UserNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        
+components:
+  schemas:
+    OrderOutDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          description: Identificador del pedido creado
+          example: 123
+        date:
+          type: string
+          format: date
+          description: Fecha de registro del pedido
+        quantity:
+          type: number
+          format: int32
+          description: Número de unidades del producto
+          example: 10
+        product:
+          $ref: '#/components/schemas/ProductDTO'
+    ProductDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del producto
+          example: Monitor
+        description:
+          type: string
+          description: Descripción del producto
+          example: Monitor de ordenador de 22"
+        category:
+          type: string
+          description: Categoría del producto
+          example: Informática
+        price:
+          type: number
+          format: float
+          description: Precio del producto
+          example: 100.50
+        observations:
+          type: string
+          description: Observaciones del producto
+          example: Monitor gaming FullHD
+    OrderInDTO:
+      properties:
+        quantity:
+          type: number
+          format: int32
+          description: Unidades de producto en el pedido
+          example: 10
+        productId:
+          type: number
+          format: int64
+          description: Identificador del producto
+          example: 1345
+    ProductIn:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Galletas"
+          description: Nombre del producto
+        description:
+          type: string
+          example: "Caja de galletas"
+          description: Descripción del producto
+        category:
+          type: string
+          example: "Alimentación"
+          description: Categoria a la que pertenece
+        price:
+          type: number
+          format: float
+          example: 12.45
+        observations:
+          type: string
+          example: "Caja de galletas con mantequilla"
+        quantity:
+          type: number
+          format: int32
+    Product:
+      allOf:
+        - type: object
+          properties:
+            id: 
+              type: number
+              format: int64
+              example: 23
+        - $ref: '#/components/schemas/ProductIn'
+      properties:
+        creationDate:
+          type: string
+          format: date
+    ErrorResponse:
+      properties:
+        errorCode:
+          type: number
+          format: int32
+          example: 104
+        message:
+          type: string
+          example: Validation error
+    PatchProduct:
+      properties:
+        field:
+          type: string
+          example: "price"
+        value:
+          type: string
+          example: 100.50
+    ErrorMap:
+      type: object
+      additionalProperties:
+        type: string
+      example:
+        quantity: must be greater than 0
+        productId: must be greater than 0
+      
+  responses:
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            errorCode: 101
+            message: "Se ha producido un error en el servidor"
+    NoContent:
+      description: No Content
+    ProductNotFound:
+      description: Producto no encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            errorCode: 102
+            message: "Producto no encontrado"
+    UserNotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            UserNotFound:
+              value:
+                errorCode: 102
+                message: "Usuario no encontrado"
+              description: No se localiza el usuario
+            ProductNotFound:
+              value: 
+                errorCode: 102
+                message: "Producto no encontrado"
+              description: No se localiza el producto
+          
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+            properties:
+              errors:
+                $ref: '#/components/schemas/ErrorMap'
+            
+  parameters:
+    ProductId:
+      name: productId
+      in: path
+      description: Código de producto
+      required: true
+      schema:
+        type: number
+        format: int64
+    UserId:
+      name: userId
+      in: path
+      description: Identificador de usuario
+      required: true
+      schema:
+        type: number
+        format: int64
+        
+  requestBodies:
+    ProductIn:
+      description: Los nuevos datos del producto
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductIn'
+    OrderInDTO:
+      description: Los datos del nuevo pedido
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderInDTO'

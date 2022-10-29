@@ -1,6 +1,7 @@
 # spring-web
 Proyectos de ejemplo de aplicaciones web con Spring Boot
 
+ - **amazonapi**: Ejemplo de API con CRUD, DTOs, ModelMapper y definición OpenAPI 3.0
  - **myshop**: Aplicación web Spring Boot tienda virtual
  - **myshop-ws**: Aplicación Spring Boot con servicios web
  - **myshop-ws-swagger**: API documentada con SpringDoc, OpenAPI 3 y Swagger UI
