@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.svalero</groupId>
+	<groupId>com.codeandcoke</groupId>
 	<artifactId>amazonapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>amazonapi</name>
