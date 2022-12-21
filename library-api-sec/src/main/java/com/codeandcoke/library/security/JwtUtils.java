@@ -25,15 +25,6 @@ import java.util.stream.Collectors;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-//    @Value("${jwt.secret}")
-//    private String jwtSecret;
-//
-//    @Value("${jwt.expiration}")
-//    private int jwtExpirationMs;
-
-    @Value("${key.private}")
-    private RSAPrivateKey privateKey;
-
     @Autowired
     private JwtEncoder jwtEncoder;
 
@@ -52,7 +43,7 @@ public class JwtUtils {
                 .issuedAt(now)
                 .expiresAt(now.plus(1, ChronoUnit.HOURS))
                 .subject(authentication.getName())
-                .claim("scope", "user") // scope
+                .claim("scope", scope)
                 .build();
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
