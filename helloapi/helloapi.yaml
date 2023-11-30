@@ -1,0 +1,213 @@
+openapi: 3.0.1
+info:
+  title: Hello API
+  description: API para la gestión de una tienda online
+  version: 1.0.0
+servers:
+  - url: 'https://api.mitiendaonline.com'
+tags:
+  - name: products
+    description: Operaciones para realizar con productos
+  - name: users
+    description: Operaciones para gestionar los usuarios de la plataforma
+paths:
+  /products:
+    get:
+      tags:
+        - products
+      summary: Lista el catálogo de productos
+      description: |
+        Esta operación permite consulta el catálogo completo de la tienda online
+        - Más cosas
+        - Más cosas
+      parameters:
+        - name: name
+          in: query
+          description: Nombre del producto
+          required: false
+          schema:
+            type: string
+        - name: price
+          in: query
+          description: Precio del producto
+          required: false
+          schema:
+            type: number
+            format: float
+      responses:
+        '200':
+          description: Devuelve la lista completa de productos disponibles en el catálogo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductOutDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - products
+      summary: Registra un nuevo producto
+      description: |
+        Esta operación permite registrar un nuevo producto
+        - Más cosas
+        - Más cosas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInDTO'
+      responses:
+        '201':
+          description: El producto se ha registrado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductOutDTO'
+        '400':
+          description: Error de validación en los datos de entrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+#  /product/{productId}:
+#    get:
+#    put:
+#    delete:
+  /users:
+    get:
+      tags:
+        - users
+      summary: Lista todos los usuarios
+      description: |
+        Esta operación permite consulta el listado completo de usuarios
+        - Más cosas
+        - Más cosas
+      responses:
+        '200':
+          description: Devuelve la lista completa de usuarios registrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+#    post:
+#  /user/{userId}:
+#    get:
+#    put:
+#    delete:
+#  /user/{userId}/orders:
+#    get:
+#    post:
+#  /user/{userId}/order/{orderId}:
+#    get:
+#    delete:
+#    put:
+components:
+  schemas:
+    ProductInDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: nombre
+          description: El nombre del producto
+        description:
+          type: string
+          example: la descripción
+          description: La descripción del producto
+        price:
+          type: number
+          format: float
+          example: 12
+          description: Precio actual del producto
+    ProductOutDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 3
+          description: El identificador del producto
+        registrationDate:
+          type: string
+          format: date
+          description: Fecha de registro
+      allOf:
+        - $ref: '#/components/schemas/ProductInDTO'
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 1
+          description: El identificador único del usuario
+        username:
+          type: string
+          example: alex
+          description: Nombre de usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+        name:
+          type: string
+          example: Alex
+          description: Nombre del usuario
+        surname:
+          type: string
+          example: Apellido
+          description: Apellidos del usuario
+        birthDate:
+          type: string
+          example: 2020-01-01
+          description: Fecha de nacimiento del usuario
+        registrationDate:
+          type: string
+          example: 2019-01-01
+          description: Fecha de registro en el sistema
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          format: int32
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+    BadRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 400
+        message: Validation error
+        errors:
+          - El nombre es obligatorio
+          - El precio debe ser mayor que cero
+    InternalServerError:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 500
+        message: Internal Server Error
+        error: []
