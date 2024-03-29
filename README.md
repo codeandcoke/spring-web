@@ -11,5 +11,6 @@ Proyectos de ejemplo de aplicaciones web con Spring Boot
  - **myshop-ws-swagger2**: Incluye ejemplos de relaciones entre clases y DTOs
  - **myshop-ws**: Aplicación Spring Boot con servicios web
  - **myshop**: Aplicación web Spring Boot tienda virtual
+ - **reactive-client**: Ejemplo de uso de WebClient para consumir una API reactiva
  - **reactive-funcional-api**: Ejemplo de API reactiva siguiendo el modelo funcional
  - **todoapi_v1**: API muy sencilla que sirve de ejemplo para el proyecto de Android TODOList sobre cómo consumir una API desde Android con Retrofit
