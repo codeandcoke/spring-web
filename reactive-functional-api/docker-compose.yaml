@@ -1,0 +1,27 @@
+version: "3.4"
+name: reactive-api-mongodb
+services:
+  mongodb:
+    image: mongo:7.0.7
+    container_name: mongodb
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $MONGODB_PORT:$MONGODB_PORT
+    volumes:
+      - db:/data/db
+  app:
+    image: reactive-api
+    container_name: reactive-api
+    env_file: ./.env
+    ports:
+      - $SPRING_PORT:$SPRING_PORT
+    environment:
+      SPRING_APPLICATION_JSON: '{
+               "spring.data.mongodb.uri" : "mongodb://mongodb:$MONGODB_PORT/$MONGODB_DATABASE?authSource=admin"
+             }'
+    depends_on:
+      - mongodb
+    restart: on-failure
+volumes:
+  db:
