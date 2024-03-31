@@ -7,6 +7,7 @@ Proyectos de ejemplo de aplicaciones web con Spring Boot
  - **helloapi**: API Spring Boot de ejemplo
  - **library-api-sec**: Ejemplo de proyecto API con seguridad (token JWT y certs público/privado)
  - **library-web**: Ejemplo de proyecto web que consume una API (library-api)
+ - **mockapi**: Ejemplo de API Mock utilizando Wiremock
  - **myshop-ws-swagger**: API documentada con SpringDoc, OpenAPI 3 y Swagger UI
  - **myshop-ws-swagger2**: Incluye ejemplos de relaciones entre clases y DTOs
  - **myshop-ws**: Aplicación Spring Boot con servicios web

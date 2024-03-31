@@ -1,0 +1,23 @@
+[
+  {
+    "name": "portatil",
+    "description": "Portatil Dell",
+    "price": 750,
+    "id": 1,
+    "registrationDate": "2023-02-14"
+  },
+  {
+    "name": "pantalla",
+    "description": "Pantalla LG",
+    "price": 120,
+    "id": 2,
+    "registrationDate": "2021-02-14"
+  },
+  {
+    "name": "ratón",
+    "description": "Ratón Bluetooth",
+    "price": 12,
+    "id": 3,
+    "registrationDate": "2023-02-14"
+  }
+]

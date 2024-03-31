@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/product/4"
+  },
+  "response": {
+    "status": 404,
+    "headers":{
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "productNotFound.json"
+  }
+}

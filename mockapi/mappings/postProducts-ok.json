@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/products"
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "postProducts-ok.json"
+  }
+}
