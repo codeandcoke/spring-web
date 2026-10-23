@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: games
+  datasource:
+    url: jdbc:h2:file:/home/astable/games.db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8080
+
