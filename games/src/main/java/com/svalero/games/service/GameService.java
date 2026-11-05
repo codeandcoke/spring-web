@@ -53,7 +53,7 @@ public class GameService {
                 .orElseThrow(GameNotFoundException::new);
 
         Game newGame = gameRepository.findByTitle(game.getTitle());
-        if (newGame != null) {
+        if (newGame != null && !oldGame.getTitle().equals(game.getTitle())) {
             throw new GameExistsAlreadyException("The new title exists already");
         }
 

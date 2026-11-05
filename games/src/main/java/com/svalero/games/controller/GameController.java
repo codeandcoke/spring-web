@@ -5,9 +5,12 @@ import com.svalero.games.exception.ErrorDTO;
 import com.svalero.games.exception.GameExistsAlreadyException;
 import com.svalero.games.exception.GameNotFoundException;
 import com.svalero.games.service.GameService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +36,7 @@ public class GameController {
     }
 
     @PostMapping("/games")
-    public ResponseEntity<Game> addGame(@RequestBody Game game) throws GameExistsAlreadyException {
+    public ResponseEntity<Game> addGame(@Valid @RequestBody Game game) throws GameExistsAlreadyException {
         Game newGame = gameService.addGame(game);
         return new ResponseEntity<>(newGame, HttpStatus.CREATED);
     }
@@ -71,5 +74,17 @@ public class GameController {
         errorDTO.setErrorMessage(gameExistsAlreadyException.getMessage());
 
         return new ResponseEntity<>(errorDTO, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException methodArgumentNotValidException) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setErrorCode(400);
+        errorDTO.setErrorMessage("Validation error");
+        methodArgumentNotValidException.getBindingResult().getAllErrors().forEach((error) -> {
+            errorDTO.getErrors().put(((FieldError) error).getField(), error.getDefaultMessage());
+        });
+
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 }

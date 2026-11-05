@@ -1,6 +1,7 @@
 package com.svalero.games.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,8 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
+    @NotNull(message = "Title cannot be null")
+    @NotBlank(message = "Title cannot be empty")
     private String title;
     @Column
     private String publisher;
@@ -25,11 +28,15 @@ public class Game {
     @Column
     private LocalDate registeredDate;
     @Column
+    @Positive
     private float price;
     @Column
     private String description;
     @Column
+    @Min(1)
+    @Max(5)
     private int rate;
     @Column
+    @Min(1)
     private int maxUsers;
 }
