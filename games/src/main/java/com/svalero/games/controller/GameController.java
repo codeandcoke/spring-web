@@ -54,6 +54,7 @@ public class GameController {
         return new ResponseEntity<>(updatedGame, HttpStatus.OK);
     }
 
+    // TODO
     public void rateGame(Game game, int rate) {
 
     }

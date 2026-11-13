@@ -1,5 +1,6 @@
 package com.svalero.games.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -39,4 +41,8 @@ public class Game {
     @Column
     @Min(1)
     private int maxUsers;
+
+    @OneToMany(mappedBy = "game")
+    @JsonBackReference(value = "reviews")
+    private List<Review> reviews;
 }
