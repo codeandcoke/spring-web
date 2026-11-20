@@ -45,4 +45,11 @@ public class Game {
     @OneToMany(mappedBy = "game")
     @JsonBackReference(value = "reviews")
     private List<Review> reviews;
+
+    @ManyToMany
+    @JoinTable(name ="game_user",
+            joinColumns = @JoinColumn(name = "game_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JsonBackReference
+    List<User> users;
 }

@@ -35,4 +35,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonBackReference(value = "reviews")
     private List<Review> reviews;
+
+    @ManyToMany(mappedBy = "users")
+    List<Game> games;
 }

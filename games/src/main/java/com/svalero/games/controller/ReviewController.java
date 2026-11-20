@@ -7,9 +7,12 @@ import com.svalero.games.exception.ErrorDTO;
 import com.svalero.games.exception.GameNotFoundException;
 import com.svalero.games.exception.UserNotFoundException;
 import com.svalero.games.service.ReviewService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +41,7 @@ public class ReviewController {
     }
 
     @PostMapping("/users/{userId}/reviews")
-    public ResponseEntity<ReviewOutDto> post(@RequestBody ReviewInDto reviewInDto, @PathVariable long userId) throws
+    public ResponseEntity<ReviewOutDto> post(@Valid @RequestBody ReviewInDto reviewInDto, @PathVariable long userId) throws
             UserNotFoundException, GameNotFoundException {
         ReviewOutDto reviewOutDto = reviewService.addReview(reviewInDto, userId);
         return new ResponseEntity<>(reviewOutDto, HttpStatus.CREATED);
@@ -60,5 +63,17 @@ public class ReviewController {
         errorDto.setErrorMessage(gameNotFoundException.getMessage());
 
         return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException methodArgumentNotValidException) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setErrorCode(400);
+        errorDTO.setErrorMessage("Validation error");
+        methodArgumentNotValidException.getBindingResult().getAllErrors().forEach((error) -> {
+            errorDTO.getErrors().put(((FieldError) error).getField(), error.getDefaultMessage());
+        });
+
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 }

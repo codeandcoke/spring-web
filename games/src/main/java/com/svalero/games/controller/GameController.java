@@ -4,6 +4,7 @@ import com.svalero.games.domain.Game;
 import com.svalero.games.exception.ErrorDTO;
 import com.svalero.games.exception.GameExistsAlreadyException;
 import com.svalero.games.exception.GameNotFoundException;
+import com.svalero.games.exception.UserNotFoundException;
 import com.svalero.games.service.GameService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,16 +49,24 @@ public class GameController {
     }
 
     @PutMapping("/games/{gameId}")
-    public ResponseEntity<Game> updateGame(@PathVariable long gameId, @RequestBody Game game)
+    public ResponseEntity<Game> updateGame(@PathVariable long gameId, @Valid @RequestBody Game game)
             throws GameNotFoundException, GameExistsAlreadyException {
         Game updatedGame = gameService.updateGame(gameId, game);
         return new ResponseEntity<>(updatedGame, HttpStatus.OK);
+    }
+
+    @PostMapping("/games/{gameId}/users/{userId}")
+    public ResponseEntity<Void> addUser(@PathVariable long gameId, @PathVariable long userId) throws GameNotFoundException,
+            UserNotFoundException {
+        gameService.addUser(gameId, userId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // TODO
     public void rateGame(Game game, int rate) {
 
     }
+
 
     @ExceptionHandler(GameNotFoundException.class)
     public ResponseEntity<ErrorDTO> handleGameNotFoundException(GameNotFoundException gameNotFoundException) {

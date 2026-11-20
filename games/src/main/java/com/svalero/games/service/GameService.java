@@ -1,9 +1,12 @@
 package com.svalero.games.service;
 
 import com.svalero.games.domain.Game;
+import com.svalero.games.domain.User;
 import com.svalero.games.exception.GameExistsAlreadyException;
 import com.svalero.games.exception.GameNotFoundException;
+import com.svalero.games.exception.UserNotFoundException;
 import com.svalero.games.repository.GameRepository;
+import com.svalero.games.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ public class GameService {
 
     @Autowired
     private GameRepository gameRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -60,5 +65,15 @@ public class GameService {
         modelMapper.map(game, oldGame);
         Game updatedGame = gameRepository.save(oldGame);
         return updatedGame;
+    }
+
+    public void addUser(long gameId, long userId) throws GameNotFoundException, UserNotFoundException {
+        Game game = gameRepository.findById(gameId)
+                .orElseThrow(GameNotFoundException::new);
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        game.getUsers().add(user);
+        gameRepository.save(game);
     }
 }
